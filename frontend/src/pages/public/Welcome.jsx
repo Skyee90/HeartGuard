@@ -1,17 +1,15 @@
 import Navbar from "../../components/layout/Navbar";
 import SearchBar from "../../components/search/SearchBar";
-import PixelHeart from "../../components/pixel-art/PixelHeart";
-import PixelDoctor from "../../components/pixel-art/PixelDoctor";
-import PixelSun from "../../components/pixel-art/PixelSun";
-import PixelFlower from "../../components/pixel-art/PixelFlower";
-import PixelCloud from "../../components/pixel-art/PixelCloud";
-import PixelHeartIcon from "../../components/pixel-art/PixelHeartIcon";
 import {
   PixelSearchIcon,
   PixelLearnIcon,
   PixelShieldIcon,
   PixelPeopleIcon,
 } from "../../components/pixel-art/PixelIcons";
+import PixelDoctor from "../../components/pixel-art/PixelDoctor";
+import PixelFlower from "../../components/pixel-art/PixelFlower";
+import PixelHeartIcon from "../../components/pixel-art/PixelHeartIcon";
+import heroArtBlank from "../../assets/hero-blank-sign.png";
 
 function Welcome() {
   return (
@@ -45,60 +43,15 @@ function Welcome() {
         </div>
 
         <div className="hero-art">
-          {/* Sun — upper right */}
-          <div className="pixel-sun">
-            <PixelSun />
-          </div>
-
-          {/* Clouds — scattered in sky */}
-          <div className="cloud cloud-1">
-            <PixelCloud width={56} />
-          </div>
-          <div className="cloud cloud-2">
-            <PixelCloud width={44} />
-          </div>
-          <div className="cloud cloud-3">
-            <PixelCloud width={38} />
-          </div>
-
-          {/* Sign — above/left of heart, z-index behind heart */}
-          <div className="sign">
+          <img src={heroArtBlank} alt="HeartGuard Hero Artwork" className="hero-artwork-image" />
+          
+          {/* Dynamic text inside the blank sign */}
+          <div className="hero-sign-text">
             <span>A</span>
             <span>HEALTHIER</span>
             <span>TOMORROW</span>
             <span>TOGETHER</span>
-            <small>♥</small>
-          </div>
-          <div className="sign-post" />
-
-          {/* Heart mascot — large, z-index in front of sign */}
-          <div className="pixel-heart-character">
-            <PixelHeart />
-          </div>
-
-          {/* Side text — far right */}
-          <div className="side-text">
-            Small<br />
-            Searches.<br />
-            Big Care. <span className="pink-heart">♥</span>
-          </div>
-
-          {/* Floating hearts */}
-          <div className="floating-hearts">
-            <span className="float-heart">♥</span>
-            <span className="float-heart">♥</span>
-            <span className="float-heart">♥</span>
-          </div>
-
-          {/* Flowers on grass */}
-          <div className="flowers">
-            <PixelFlower color="pink" />
-            <PixelFlower color="red" />
-          </div>
-
-          {/* Grass */}
-          <div className="grass">
-            <div className="grass-hill" />
+            <span className="sign-heart">❤️</span>
           </div>
         </div>
       </section>

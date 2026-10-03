@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap");
+@import url("./dashboard.css");
 
 /* ───── Design Tokens ───── */
 :root {
@@ -140,21 +141,22 @@ svg { image-rendering: pixelated; shape-rendering: crispEdges; }
 }
 
 /* ═══════════════════════════════════════
-   HERO  ─  ~450 px, flat sky-blue
+   HERO  ─  Sky-blue background
    ═══════════════════════════════════════ */
 .welcome { min-height: 100vh; }
 
 .hero {
-  height: 450px;
+  min-height: 480px;
+  padding: 0 5%;
   display: flex;
   overflow: hidden;
   position: relative;
-  background: var(--bg-hero);       /* flat, no gradient */
+  background: linear-gradient(135deg, #e8f4fc 0%, #f1f8fe 100%);
 }
 
-/* Left column — heading + search  ≈ 42 % */
+/* Left column — heading + search ≈ 50% */
 .hero-content {
-  width: 42%;
+  width: 50%;
   padding: 55px 0 50px 5.2%;
   position: relative;
   z-index: 2;
@@ -163,33 +165,33 @@ svg { image-rendering: pixelated; shape-rendering: crispEdges; }
   justify-content: center;
 }
 
-h1 {
+.hero-content h1 {
   margin: 0;
   font-family: var(--font-pixel);
-  font-size: clamp(40px, 4.5vw, 68px);
-  line-height: 1.02;
-  font-weight: 700;
-  letter-spacing: -1px;
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.08;
+  font-weight: 600;
   color: var(--text-primary);
 }
 
 .hero-subtitle {
-  margin: 18px 0 24px;
-  font-size: 21px;
+  margin: 14px 0 24px;
+  font-size: 20px;
   color: var(--text-secondary);
   font-family: var(--font-body);
 }
 
 /* ── Search ── */
-.search-area { max-width: 100%; }
+.search-area { 
+  width: min(845px,100%); 
+}
 
 .search-box {
   display: flex; align-items: center;
   background: var(--bg-white);
-  border: 3px solid var(--border-main);
-  border-radius: 18px;
-  padding: 4px;
-  box-shadow: 0 4px 0 rgba(20,33,61,.07);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  padding: 5px;
   transition: border-color var(--transition-fast);
 }
 .search-box:focus-within { border-color: var(--accent-coral); }
@@ -211,13 +213,14 @@ h1 {
 .search-box input::placeholder { color: var(--text-muted); }
 
 .search-box button {
-  border: 0; border-radius: 12px;
-  padding: 13px 30px;
+  border: 0; border-radius: 20px;
+  padding: 12px 30px;
   background: var(--accent-coral);
   color: var(--text-white);
-  font-weight: 700; font-size: 15px;
-  font-family: var(--font-pixel);
+  font-weight: 600; font-size: 15px;
+  font-family: var(--font-body);
   transition: background var(--transition-fast);
+  cursor: pointer;
 }
 .search-box button:hover { background: var(--accent-coral-hover); }
 
@@ -247,68 +250,80 @@ h1 {
 }
 
 /* ═══════════════════════════════════════
-   HERO ART  ─  right ≈ 58 %
-   Composition: sign+post, heart mascot,
-   sun, clouds, side-text, grass, flowers
+   HERO ART  ─  right ≈ 50 %
    ═══════════════════════════════════════ */
 .hero-art {
-  flex: 1;                 /* takes remaining 58 % */
+  width: 50%;
+  flex: none;
   position: relative;
-  min-height: 450px;
+  overflow: hidden;
+}
+.hero-artwork-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* Dynamic text positioned over the blank sign in the artwork */
+.hero-sign-text {
+  position: absolute;
+  top: 12%;
+  left: 10%;
+  width: 30%;
+  height: 36%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-pixel);
+  color: #1a2a47;
+  font-size: clamp(8px, 1.1vw, 15px);
+  line-height: 1.35;
+  z-index: 2;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+}
+.hero-sign-text span {
+  display: block;
+}
+.hero-sign-text .sign-heart {
+  color: var(--accent-coral);
+  font-size: 1.2em;
+  margin-top: 2px;
 }
 
 /* ── Heart mascot ── */
 .pixel-heart-character {
   position: absolute;
-  /* Center-right of art area, feet touch grass */
-  right: 20%;
-  bottom: 80px;            /* grass is 85 px, heart SVG has padding below feet */
-  z-index: 5;              /* IN FRONT of sign */
-  animation: floatHeart 3s ease-in-out infinite;
-}
-@keyframes floatHeart {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-6px); }
+  width: 300px;
+  height: auto;
+  right: 25%;
+  bottom: 0;
+  z-index: 5;
 }
 
-/* ── Sign (held by heart's right arm) ── */
-.sign {
-  position: absolute;
-  right: 40%;
-  top: 42px;
-  z-index: 3;              /* behind heart */
-  padding: 14px 20px;
-  background: #fffaf0;
-  border: 3px solid var(--border-dark);
-  transform: rotate(-5deg);
-  display: flex; flex-direction: column;
-  text-align: center;
-  font-size: 15px; font-weight: 700;
-  font-family: var(--font-pixel);
-  line-height: 1.25; letter-spacing: 1px;
-  box-shadow: 3px 3px 0 rgba(20,33,61,.1);
+.pixel-heart-character svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.sign small { margin-top: 5px; color: var(--accent-coral); font-size: 16px; }
 
-/* ── Sign post ── */
-.sign-post {
-  position: absolute;
-  right: calc(40% + 36px);
-  top: 140px;
-  width: 6px;
-  height: 230px;           /* from below sign to grass */
-  background: #8B6914;
-  z-index: 2;
-  box-shadow: 2px 0 0 #6d5210;
-}
+
 
 /* ── Side text ── */
 .side-text {
   position: absolute;
-  top: 80px;
-  right: 3%;
+  top: 105px;
+  right: 1%;
   font-family: var(--font-pixel);
-  font-size: 22px; font-weight: 700;
+  font-size: 19px; font-weight: 700;
   text-align: right;
   color: var(--text-primary);
   line-height: 1.3;
@@ -319,34 +334,222 @@ h1 {
 /* ── Sun ── */
 .pixel-sun {
   position: absolute;
-  top: 16px; right: 4%;
+  top: 14px;
+  right: 7%;
+  width: 120px;
+  height: 120px;
   z-index: 2;
+}
+
+.pixel-sun svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
 }
 
 /* ── Clouds ── */
 .cloud {
   position: absolute;
-  z-index: 2;
-  opacity: 0.85;
+  z-index: 1;
+  pointer-events: none;
 }
-.cloud-1 { top: 60px;  left: 8%; }
-.cloud-2 { top: 28px;  left: 35%; }
-.cloud-3 { top: 100px; right: 52%; }
+
+.cloud-1 {
+  top: 55px;
+  left: 8%;
+}
+
+.cloud-2 {
+  top: 18px;
+  left: 48%;
+}
+
+.cloud-3 {
+  top: 115px;
+  right: 4%;
+}
 
 /* ── Grass ── */
-.grass {
+/* =========================================
+   PIXEL GRASS SCENE
+   ========================================= */
+
+.pixel-grass-container {
   position: absolute;
-  left: -10%; right: 0; bottom: 0;
-  height: 85px;
-  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 105px;
   overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
 }
-.grass-hill {
+
+/* Back hill */
+
+.grass-hill-back {
   position: absolute;
-  bottom: 0; left: -5%; right: -5%;
-  height: 85px;
-  background: linear-gradient(180deg, #8dc362 0%, #6daa3c 100%);
-  border-radius: 50% 50% 0 0;
+  right: 8%;
+  bottom: 18px;
+  width: 62%;
+  height: 82px;
+  background: #8bb874;
+
+  clip-path: polygon(
+    0% 65%,
+    8% 65%,
+    8% 50%,
+    18% 50%,
+    18% 34%,
+    32% 34%,
+    32% 18%,
+    48% 18%,
+    48% 5%,
+    68% 5%,
+    68% 18%,
+    82% 18%,
+    82% 34%,
+    92% 34%,
+    92% 50%,
+    100% 50%,
+    100% 100%,
+    0% 100%
+  );
+}
+
+/* Front hill */
+
+.grass-hill-front {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 78px;
+  background: #a7d98b;
+  z-index: 2;
+}
+
+.grass-details {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 180px;
+  z-index: 3;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Pixel steps */
+
+.grass-step {
+  position: absolute;
+  background: #a7d98b;
+}
+
+.step-1 {
+  width: 70%;
+  height: 14px;
+  left: 8%;
+  bottom: 70px;
+}
+
+.step-2 {
+  width: 52%;
+  height: 14px;
+  left: 18%;
+  bottom: 84px;
+}
+
+.step-3 {
+  width: 36%;
+  height: 14px;
+  left: 30%;
+  bottom: 98px;
+}
+
+.step-4 {
+  width: 20%;
+  height: 10px;
+  left: 43%;
+  bottom: 108px;
+}
+
+/* Flowers */
+
+.grass-flower {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  z-index: 5;
+
+  box-shadow:
+    -8px 8px 0 white,
+    8px 8px 0 white,
+    0 16px 0 white;
+}
+
+.flower-center {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: #ffda45;
+  z-index: 2;
+}
+
+.flower-stem {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 8px;
+  height: 18px;
+  background: #6a9c53;
+}
+
+.flower-left {
+  bottom: 34px;
+  left: 35%;
+}
+
+.flower-right {
+  bottom: 28px;
+  right: 22%;
+}
+
+/* Grass texture */
+
+.grass-texture {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #82ad6b;
+  z-index: 4;
+}
+
+.texture-1 {
+  bottom: 32px;
+  left: 42%;
+
+  box-shadow:
+    24px 16px 0 #82ad6b,
+    60px 8px 0 #91bd75,
+    105px 22px 0 #82ad6b,
+    160px 12px 0 #91bd75;
+}
+
+.texture-2 {
+  bottom: 48px;
+  left: 58%;
+
+  box-shadow:
+    -40px 12px 0 #82ad6b,
+    45px -8px 0 #91bd75,
+    95px 14px 0 #82ad6b;
 }
 
 /* ── Flowers on grass ── */
@@ -611,16 +814,18 @@ h1 {
   .navbar > .navbar-signin { display: none; }
   .navbar-mobile-toggle { display: flex; }
 
-  .hero { height: auto; min-height: 0; flex-direction: column; }
-  .hero-content { width: 100%; padding: 40px 20px; }
-  .hero-art { display: none; }
+  .hero { min-height: 0; flex-direction: column; }
+  .hero-content { width: 100%; padding: 30px 20px 20px; }
+  .hero-art { width: 100%; height: 280px; }
+  .hero-artwork-image { position: relative; width: 100%; height: 100%; object-position: center center; }
+  .hero-sign-text { font-size: clamp(10px, 2.5vw, 18px); top: 8%; left: 8%; width: 32%; height: 38%; }
 
-  h1 { font-size: 38px; }
+  .hero-content h1 { font-size: 38px; }
   .hero-subtitle { font-size: 18px; }
 
-  .search-box { flex-wrap: wrap; }
+  .search-box { flex-wrap: wrap; border-radius: 16px; }
   .search-box input { width: calc(100% - 55px); }
-  .search-box button { width: 100%; margin-top: 4px; }
+  .search-box button { width: 100%; margin-top: 4px; border-radius: 12px; }
 
   .features-strip { grid-template-columns: 1fr; }
   .feature-item { border-right: none; border-bottom: 1px solid var(--border-light); }
@@ -636,6 +841,636 @@ h1 {
 }
 
 @media (max-width: 480px) {
-  h1 { font-size: 32px; }
+  .hero-content h1 { font-size: 32px; }
   .feature-item { padding: 20px 16px; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   MEDICINE DETAIL PAGE
+   All styles scoped under .medicine-detail-page to prevent
+   conflicts with existing global and landing-page styles.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Medicine-specific color tokens ── */
+:root {
+  --med-sage-bg:      #eef4ef;   /* common side effects card */
+  --med-pink-bg:      #fbeae8;   /* serious side effects card */
+  --med-reminder-bg:  #f0f4ef;   /* pale sage reminder banner */
+  --med-disclaimer-bg:#ebf3fa;   /* pale blue disclaimer */
+  --med-pill-box-bg:  #f5e0dc;   /* pink pill image container */
+  --med-badge-bg:     #ddf0de;   /* common medicine badge */
+  --med-badge-text:   #3a7d44;
+  --med-green-link:   #2f6a4f;   /* back-to-search, view sources */
+  --med-border:       #dce2e9;   /* = --border-light, alias */
+}
+
+/* ── Page shell ── */
+.medicine-detail-page {
+  min-height: 100vh;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Override global h1 pixel font inside this page */
+.medicine-detail-page h1 {
+  font-family: var(--font-body);
+  font-size: clamp(24px, 4vw, 38px);
+  letter-spacing: -0.5px;
+}
+
+/* ── Body content container ── */
+.med-body {
+  flex: 1;
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 28px 48px;
+}
+
+/* ── Back to search link ── */
+.med-back-row {
+  padding: 18px 0 14px;
+}
+.med-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--med-green-link);
+  font-family: var(--font-body);
+  transition: color var(--transition-fast);
+}
+.med-back-link:hover { color: #1d4d38; }
+
+/* ════════════════════════════════════════
+   MEDICINE HEADER
+   ════════════════════════════════════════ */
+.med-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 24px 24px 20px;
+  background: var(--bg-white);
+  border: 1px solid var(--med-border);
+  border-radius: 14px;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+/* Pill image box */
+.med-pill-box {
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+  background: var(--med-pill-box-bg);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e8c8c4;
+}
+
+/* Name / meta block */
+.med-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.med-name {
+  color: var(--text-primary);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.med-meta {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  font-family: var(--font-body);
+}
+.med-dosage { font-weight: 500; }
+.med-form   { font-weight: 500; }
+
+.med-badge {
+  display: inline-block;
+  background: var(--med-badge-bg);
+  color: var(--med-badge-text);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: var(--font-body);
+}
+
+/* Save button */
+.med-save-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 2px solid var(--accent-coral);
+  border-radius: 10px;
+  background: var(--bg-white);
+  color: var(--accent-coral);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+.med-save-btn:hover {
+  background: var(--accent-coral);
+  color: var(--text-white);
+}
+.med-save-icon { font-size: 16px; }
+
+/* Mascot area */
+.med-header-mascot-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-top: 28px; /* offset below save button */
+}
+
+/* Speech bubble — deliberately NOT .speech-bubble to avoid existing style conflict */
+.mascot-speech-bubble {
+  position: relative;
+  background: var(--bg-white);
+  border: 1.5px solid #c8d4c8;
+  border-radius: 14px;
+  padding: 12px 16px;
+  max-width: 200px;
+  box-shadow: 2px 2px 0 rgba(20, 33, 61, 0.04);
+}
+
+/* Tail — points right toward mascot */
+.mascot-speech-bubble::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  bottom: 18px;
+  border: 5px solid transparent;
+  border-left: 5px solid var(--bg-white);
+  filter: drop-shadow(2px 0 0 #c8d4c8);
+}
+
+.mascot-bubble-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+.mascot-bubble-heart {
+  display: block;
+  margin-top: 4px;
+  color: var(--accent-coral);
+  font-size: 14px;
+}
+
+.med-mascot-wrap {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* ════════════════════════════════════════
+   SHARED CARD BASE
+   ════════════════════════════════════════ */
+.med-card {
+  background: var(--bg-white);
+  border: 1px solid var(--med-border);
+  border-radius: 13px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+
+.med-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.med-card-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+/* ════════════════════════════════════════
+   REMINDER BANNER
+   ════════════════════════════════════════ */
+.med-reminder {
+  background: var(--med-reminder-bg);
+  border: 1px solid #c8d9c6;
+  border-radius: 12px;
+  padding: 18px 24px;
+  margin-bottom: 16px;
+}
+
+.med-reminder-primary {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2f6a4f;
+  font-family: var(--font-body);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.med-reminder-secondary {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+/* ════════════════════════════════════════
+   SIDE EFFECTS GRID
+   ════════════════════════════════════════ */
+.med-side-effects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.med-se-card {
+  border-radius: 13px;
+  padding: 22px 20px;
+  border: 1px solid transparent;
+}
+
+.med-se-card--common {
+  background: var(--med-sage-bg);
+  border-color: #c2d9c4;
+}
+
+.med-se-card--serious {
+  background: var(--med-pink-bg);
+  border-color: #e8c4c2;
+}
+
+.med-se-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.med-se-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.med-se-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.med-se-item {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  padding: 10px 12px;
+  background: var(--bg-white);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255,255,255,0.8);
+  line-height: 1.4;
+}
+
+/* ════════════════════════════════════════
+   SOURCES
+   ════════════════════════════════════════ */
+.med-sources {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.med-sources-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.med-sources-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.med-sources-text { min-width: 0; }
+
+.med-sources-inline-link {
+  color: var(--med-green-link);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.med-sources-inline-link:hover { color: #1d4d38; }
+
+.med-sources-link {
+  flex-shrink: 0;
+  color: var(--med-green-link);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+.med-sources-link:hover { color: #1d4d38; }
+
+/* ════════════════════════════════════════
+   LOG A SYMPTOM CTA
+   ════════════════════════════════════════ */
+.med-cta-wrap { margin-bottom: 12px; }
+
+.med-cta-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 24px;
+  background: var(--accent-coral);
+  color: var(--text-white);
+  border: none;
+  border-radius: 13px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform 0.1s ease;
+  letter-spacing: -0.2px;
+}
+.med-cta-btn:hover  { background: var(--accent-coral-hover); }
+.med-cta-btn:active { transform: translateY(1px); }
+
+.med-cta-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.med-cta-arrow {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.med-cta-subtext {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+/* ════════════════════════════════════════
+   DISCLAIMER BANNER
+   ════════════════════════════════════════ */
+.med-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--med-disclaimer-bg);
+  border: 1px solid #c0d8ee;
+  border-radius: 10px;
+  margin-bottom: 0;
+}
+
+.med-disclaimer-icon {
+  font-size: 16px;
+  color: #3a78b5;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.med-disclaimer-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+/* ════════════════════════════════════════
+   MEDICINE FOOTER
+   Distinct from .footer (landing page footer)
+   ════════════════════════════════════════ */
+.medicine-footer {
+  width: 100%;
+  background: var(--bg-page);
+  border-top: 1px solid var(--med-border);
+  margin-top: auto;
+}
+
+.medicine-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 32px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.med-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.med-footer-logo-icon { display: flex; align-items: center; }
+.med-footer-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.med-footer-name {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  color: var(--text-primary);
+}
+.med-footer-tagline {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+.med-footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.med-footer-nav-group { display: flex; align-items: center; gap: 4px; }
+.med-footer-sep { color: var(--text-muted); font-size: 13px; padding: 0 4px; }
+.med-footer-nav-link {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  padding: 2px 6px;
+  transition: color var(--transition-fast);
+}
+.med-footer-nav-link:hover { color: var(--text-primary); }
+
+.med-footer-tagline-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+.med-footer-slogan {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.med-footer-heart { color: var(--accent-coral); }
+
+.med-footer-care-note {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.med-footer-care-note--tilted {
+  display: inline-block;
+  transform: rotate(-3deg);
+  transform-origin: center;
+}
+
+/* ════════════════════════════════════════
+   PIXEL FOOTER LANDSCAPE
+   ════════════════════════════════════════ */
+.med-footer-landscape {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background: var(--bg-page);
+}
+
+/* Sky layer */
+.med-footer-sky {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 80px;
+  pointer-events: none;
+}
+
+/* Sun */
+.med-footer-sun {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Clouds */
+.med-footer-cloud {
+  position: absolute;
+  top: 12px;
+}
+.med-footer-cloud--1 { left: 8%; }
+.med-footer-cloud--2 { left: 28%; }
+.med-footer-cloud--3 { right: 10%; }
+
+/* Ground layer */
+.med-footer-ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 100px;
+}
+
+/* Green grass strip */
+.med-footer-grass-strip {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 28px;
+  background: #a7d98b;
+  border-top: 3px solid #8bbe72;
+}
+
+/* Generic item positioning */
+.med-footer-item {
+  position: absolute;
+  bottom: 22px;
+}
+
+/* Trees */
+.med-footer-tree-left  { left: 1%; bottom: 24px; }
+.med-footer-tree-right { right: 1%; bottom: 24px; }
+
+/* Bench & cat */
+.med-footer-bench { left: 54%; transform: translateX(-50%); bottom: 24px; }
+.med-footer-cat   { left: calc(54% + 60px); bottom: 24px; }
+
+/* Flowers */
+.med-footer-flower { bottom: 26px; }
+.med-footer-flower--1 { left: 18%; }
+.med-footer-flower--2 { left: 30%; }
+.med-footer-flower--3 { right: 18%; }
+.med-footer-flower--4 { right: 28%; }
+
+/* ════════════════════════════════════════
+   MEDICINE PAGE RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 850px) {
+  .med-body { padding: 0 16px 40px; }
+
+  /* Header reflow */
+  .med-header {
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px 16px;
+  }
+  .med-header-mascot-area {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .med-save-btn { position: static; margin-left: auto; }
+
+  /* Side effects single column */
+  .med-side-effects-grid { grid-template-columns: 1fr; }
+
+  /* Sources stack */
+  .med-sources { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  /* Footer links wrap */
+  .medicine-footer-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 16px;
+  }
+  .med-footer-tagline-right { text-align: left; }
+  .med-footer-care-note--tilted { transform: none; }
+}
+
+@media (max-width: 540px) {
+  .med-header-mascot-area { flex-direction: column; align-items: center; }
+  .mascot-speech-bubble { max-width: 90%; }
+  .med-cta-btn { font-size: 16px; padding: 16px 16px; }
+  .med-footer-landscape { height: 110px; }
 }
